@@ -29,3 +29,19 @@ Thumbs.db
 *.pem
 *.key
 
+# Terraform provider binaries (large files)
+terraform/.terraform/providers/
+
+# Git LFS objects
+.git/lfs/
+
+# Git objects and packs
+.git/objects/
+.git/objects/pack/
+
+# Node.js dependencies
+node_modules/
+
+# System files (in case of accidental inclusion)
+proc/
+
