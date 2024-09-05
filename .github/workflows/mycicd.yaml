@@ -31,10 +31,8 @@ jobs:
         docker push chinni111/medusa:latest
 
     - name: Deploy to ECS
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      with:
-        task-definition: terraform/ecs.tf
-        service: medusa-service
-        cluster: medusa-cluster
-        wait-for-service-stability: true
-        region: us-east-1
+      run: |
+        aws ecs update-service --cluster medusa-cluster --service medusa-service --force-new-deployment --region us-east-1
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
