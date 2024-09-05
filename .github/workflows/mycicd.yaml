@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,12 +30,6 @@ jobs:
       run: |
         docker push chinni111/medusa:latest
 
-    - name: Terraform Init and Apply
-      run: |
-        cd terraform
-        terraform init
-        terraform apply -auto-approve
-
     - name: Deploy to ECS
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
@@ -44,4 +38,3 @@ jobs:
         cluster: medusa-cluster
         wait-for-service-stability: true
         region: us-east-1
-
