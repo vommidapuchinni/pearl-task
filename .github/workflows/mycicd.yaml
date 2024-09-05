@@ -33,7 +33,7 @@ jobs:
     - name: Deploy to ECS
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: terraform/ecs-task-definition.json
+        task-definition: terraform/ecs.tf
         service: medusa-service
         cluster: medusa-cluster
         wait-for-service-stability: true
