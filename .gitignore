@@ -1,30 +1,31 @@
-/dist
+# Python virtual environment
+myenv/
+
+# Build artifacts
+build/
+dist/
+uploads/
+
+# Local environment variables
 .env
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# IDE/editor configuration files
+.vscode/
+
+# Cache directories
+.cache/
+
+# Exclude OS-generated files
 .DS_Store
-/uploads
-# .gitignore
+Thumbs.db
 
-.terraform/
-/node_modules
-yarn-error.log
-
-.idea
-
-coverage
-
-!src/**
-
-./tsconfig.tsbuildinfo
-package-lock.json
-yarn.lock
-medusa-db.sql
-build
-.cache
-
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+# Exclude sensitive files and directories
+*.pem
+*.key
 
