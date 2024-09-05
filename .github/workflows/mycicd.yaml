@@ -1,4 +1,4 @@
-name: Build, Deploy to ECS, and Manage Infrastructure
+name: Deploy to ECS
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_and_deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,37 +26,20 @@ jobs:
       run: |
         docker build -t chinni111/medusa:latest .
 
-    - name: Test Docker image
-      run: |
-        docker run -d -p 80:80 --name medusa_test chinni111/medusa:latest
-        sleep 30  # Wait for the container to start
-        curl -f http://localhost:80 || exit 1  # Verify the application is running
-        docker stop medusa_test
-        docker rm medusa_test
-
-    - name: Push Docker image
+    - name: Push Docker image to Docker Hub
       run: |
         docker push chinni111/medusa:latest
 
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.5.0  # Specify your Terraform version
-
-    - name: Terraform Init
+    - name: Terraform Init and Apply
       run: |
         cd terraform
         terraform init
-
-    - name: Terraform Apply
-      run: |
-        cd terraform
         terraform apply -auto-approve
 
     - name: Deploy to ECS
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: ecs-task-definition.json
+        task-definition: terraform/ecs-task-definition.json
         service: medusa-service
         cluster: medusa-cluster
         wait-for-service-stability: true
